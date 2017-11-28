@@ -16,7 +16,7 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 	 *
 	 * Class for create form konfirmasi pembayaran frontend
 	 */
-	class FormKonfirmasi {
+	class FormKonfirmasi extends SendmailKonfirmasi {
 
 		/**
 		 * Class constructor.
@@ -165,33 +165,36 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 
 			if ( count( $error ) > 0 ) { // jika error batalkan konfirmasi pembayaran ?>
 				
-				<h4><?php echo get_option( 'pkps_confirm_failed_title' ) ? get_option( 'pkps_confirm_failed_title' ) : __('Konfirmasi Gagal'); ?></h4>
+				<h4><?php echo get_option( 'pkps_confirm_failed_title' ) ? get_option( 'pkps_confirm_failed_title' ) : __('Konfirmasi Gagal', 'pkp' ); ?></h4>
 				<div class="error_message">
-					<?php echo get_option( 'pkps_confirm_failed_content' ) ? get_option( 'pkps_confirm_failed_content' ) : __('Konfirmasi Gagal'); ?>
+					<?php echo get_option( 'pkps_confirm_failed_content' ) ? get_option( 'pkps_confirm_failed_content' ) : __('Silahkan hubungi customer service kami jika ada yang ingin ditanyakan', 'pkp' ); ?>
 				</div>
 
 				<?php
 			} else {
 
-				add_filter( 'wp_mail_content_type', function(){ return 'text/html'; } );
-
 				// Kirim Email notifikasi ke customer jika berhasil memasukan data konfirmasi pembayaran
 				$user_email = $order->get_billing_email();
-				$subject	= 'Konfirmasi Pembayaran';
-				$message    = get_option( 'konfirmasi_pembayaran_setting_confirm_success_customer' ) ? get_option( 'konfirmasi_pembayaran_setting_confirm_success_customer' ) : 'Selamat Anda berhasil melakaukan konfirmasi Pembayaran';
-
-				if( wp_mail( $user_email, $subject, $message ) ) {
-					echo 'Proses Konfirmasi Berhasil.';
-				} else {
-					echo 'Gagal Mengirim Email';
-				}
+				SendmailKonfirmasi::send( array(
+					'email'	=> $user_email,
+					'type'	=> 'payment_confirmation_success'
+				) );
 
 				// Kirim Email notifikasi ke admin jika ada konfirmasi pembayaran
-				$admin_email     = get_option( 'admin_email' );
-				$subject_admin	 = 'Konfirmasi Pembayaran';
-				$message_admin   = get_option( 'konfirmasi_pembayaran_setting_confirm_success_admin' ) ? get_option( 'konfirmasi_pembayaran_setting_confirm_success_admin' ) : 'Ada Konfirmasi Pembayaran Dari : ' . $order->get_formatted_billing_full_name() . ',<br />Dengan No.Order : <a href="'. admin_url( 'post.php?post=' . $order->get_ID() . '&action=edit' ) .'">#' . $order->get_ID() . '</a>';
+				$admin_email = get_option( 'admin_email' );
+				SendmailKonfirmasi::send( array(
+					'email'	=> $admin_email,
+					'type'	=> 'admin_payment_confirmation_success'
+				) );
 
-				wp_mail( $admin_email, $subject_admin, $message_admin );
+				// print success message
+				?>
+				<h4><?php echo get_option( 'pkps_confirm_success_title' ) ? get_option( 'pkps_confirm_success_title' ) : __('Konfirmasi Berhasil', 'pkp' ); ?></h4>
+				<div class="error_message">
+					<?php echo get_option( 'pkps_confirm_success_content' ) ? get_option( 'pkps_confirm_success_content' ) : __('Konfirmasi pembayaran Anda sedang kami proses, harap menunggu.', 'pkp' ); ?>
+				</div>
+
+				<?php
 
 			}
 

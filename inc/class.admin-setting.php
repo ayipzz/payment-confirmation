@@ -24,8 +24,8 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 			$this->label = __( 'Konfirmasi Pembayaran', 'pkp' );
 
 			add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_tab' ), 50 );
-			add_action( 'woocommerce_settings_tabs_konfirmasi_pembayaran_setting', array( $this, 'settings_tab' ) );
-			add_action( 'woocommerce_update_options_konfirmasi_pembayaran_setting', array( $this, 'update_settings' ) );
+			add_action( 'woocommerce_settings_tabs_pkps', array( $this, 'settings_tab' ) );
+			add_action( 'woocommerce_update_options_pkps', array( $this, 'update_settings' ) );
 		}
 
 		/**

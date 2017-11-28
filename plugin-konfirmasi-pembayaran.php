@@ -69,6 +69,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 		 * @return void
 		 */
 		private function includes() {
+			include_once PKP_PATH . 'inc/class.sendmail.php';
 			include_once PKP_PATH . 'inc/class.form-konfirmasi.php';
 			include_once PKP_PATH . 'inc/class.admin-konfirmasi.php';
 			include_once PKP_PATH . 'inc/class.admin-setting.php';
