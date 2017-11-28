@@ -40,12 +40,14 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 		 * @return html
 		 */
 		public function form_konfirmasi_pembayaran() {
-			
+			$error = array();
 			// get woocommerce bacs account
 			$bacs_account = new WC_Gateway_BACS();
 
-			require plugin_dir_path( __FILE__ ) . 'view/view.form-konfirmasi-pembayaran.php';
-
+			if ( ! isset( $_POST['action'] ) ) {
+				require plugin_dir_path( __FILE__ ) . 'view/view.form-konfirmasi-pembayaran.php';
+			}
+			
 			// check input empty or not
 			if ( isset( $_POST['action'] ) && $_POST['action'] == 'payment_confirmation' ) {
 				
@@ -109,9 +111,9 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 										$confirmation[] = $data_confirmation; // tambahakan data lama dengan data baru
 
 										if ( update_post_meta( $order->get_id(), 'order_bacs_confirmation', maybe_serialize( $confirmation ) ) ) {
-											echo 'Berhasil menambahkan data konfirmasi';
+											//echo 'Berhasil menambahkan data konfirmasi';
 										} else {
-											$this->error_payment_confirmation( 'Gagal menambahkan data konfirmasi' );
+											$error[] = 'Gagal menambahkan data konfirmasi';
 										}
 
 									} else { // buat konfirmasi baru
@@ -119,39 +121,63 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 										$confirmation[] = $data_confirmation;
 
 										if ( add_post_meta( $order->get_id(), 'order_bacs_confirmation', maybe_serialize( $confirmation ) ) )  {
-											echo 'Berhasil menambahkan data konfirmasi';
+											//echo 'Berhasil menambahkan data konfirmasi';
 										} else {
-											$this->error_payment_confirmation( 'Gagal menambahkan data konfirmasi' );
+											$error[] = 'Gagal menambahkan data konfirmasi';
 										}
 										
 									}
 									
 								} else {
-									$this->error_payment_confirmation( 'Tipe File tidak sesuai, pastikan (jpeg, jpg, png)' );
+									$error[] = 'Tipe File tidak sesuai, pastikan (jpeg, jpg, png)';
 								}
 
 							} else {
-								$this->error_payment_confirmation( 'Order status tidak pending' );
+								$error[] = 'Order status tidak pending';
 							}
 
 						} else {
-							$this->error_payment_confirmation( 'metode pembayaran bukan bacs' );
+							$error[] = 'metode pembayaran bukan bacs';
 						}
 					} else {
-						$this->error_payment_confirmation( 'order tidak ditemukan' );
+						$error[] = 'order tidak ditemukan';
 					}
 
 				} else {
-					$this->error_payment_confirmation( '*)Pastikan semua kolom diisi' );
+					$error[] = '*)Pastikan semua kolom diisi';
 				}
+
+				// check error handle
+				$this->error_handle( $error );
 
 			}
 			
 		}
 
-		public function error_payment_confirmation( $message ) {
-			echo 'Error, ' . $message;
-		} 
+		/**
+		 * Method untuk menghandle apakah ada error, jika ada maka konfirmasi pembayaran batal, jika berhasil maka kirim email
+		 * 
+		 * @param  array $atts  berisi pesan error
+		 * @return void
+		 */
+		public function error_handle( $atts ) {
+			
+			if ( count( $atts ) > 0 ) { // jika error batalkan konfirmasi pembayaran
+				?>
+				<h4><?php _e( 'Konfirmasi Pembayaran Gagal', 'pkp' ); ?></h4>
+				<div class="error_message">
+					<?php
+					foreach ($atts as $key => $value) {
+						echo $value;
+					}
+					?>
+				</div>
+				<?php
+			} else {
+				
+			}
+
+		}
 	}
 
 }
