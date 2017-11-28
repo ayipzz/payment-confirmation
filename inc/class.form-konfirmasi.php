@@ -148,7 +148,7 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 				}
 
 				// check error handle
-				$this->error_handle( $error );
+				$this->error_handle( $error, $order );
 
 			}
 			
@@ -160,10 +160,11 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 		 * @param  array $atts  berisi pesan error
 		 * @return void
 		 */
-		public function error_handle( $atts ) {
-			
-			if ( count( $atts ) > 0 ) { // jika error batalkan konfirmasi pembayaran
-				?>
+		public function error_handle( $atts, $order ) {
+			//global $post;
+
+			if ( count( $atts ) > 0 ) { // jika error batalkan konfirmasi pembayaran ?>
+
 				<h4><?php _e( 'Konfirmasi Pembayaran Gagal', 'pkp' ); ?></h4>
 				<div class="error_message">
 					<?php
@@ -172,12 +173,34 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 					}
 					?>
 				</div>
+
 				<?php
 			} else {
-				
+
+				add_filter( 'wp_mail_content_type', function(){ return 'text/html'; } );
+
+				// Kirim Email notifikasi ke customer jika berhasil memasukan data konfirmasi pembayaran
+				$user_email = $order->get_billing_email();
+				$subject	= 'Konfirmasi Pembayaran';
+				$message    = get_option( 'konfirmasi_pembayaran_setting_text_output' ) ? get_option( 'konfirmasi_pembayaran_setting_text_output' ) : 'Selamat Anda berhasil melakaukan konfirmasi Pembayaran';
+
+				if( wp_mail( $user_email, $subject, $message ) ) {
+					echo 'Proses Konfirmasi Berhasil.';
+				} else {
+					echo 'Gagal Mengirim Email';
+				}
+
+				// Kirim Email notifikasi ke admin jika ada konfirmasi pembayaran
+				$admin_email     = get_option( 'admin_email' );
+				$subject_admin	 = 'Konfirmasi Pembayaran';
+				$message_admin   = 'Ada Konfirmasi Pembayaran Dari : ' . $order->get_formatted_billing_full_name() . ',<br />Dengan No.Order : <a href="'. admin_url( 'post.php?post=' . $order->get_ID() . '&action=edit' ) .'">#' . $order->get_ID() . '</a>';
+
+				wp_mail( $admin_email, $subject_admin, $message_admin );
+
 			}
 
 		}
+
 	}
 
 }

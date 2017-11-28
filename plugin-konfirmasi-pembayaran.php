@@ -40,12 +40,15 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 			}
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 			$this->define_constants();
 			$this->includes();
 
 			new FormKonfirmasi();
 			new AdminKonfirmasi();
+			new AdminSettingKonfirmasi();
+			
 		}
 
 		/**
@@ -68,10 +71,11 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 		private function includes() {
 			include_once PKP_PATH . 'inc/class.form-konfirmasi.php';
 			include_once PKP_PATH . 'inc/class.admin-konfirmasi.php';
+			include_once PKP_PATH . 'inc/class.admin-setting.php';
 		}
 
 		/**
-		 * Enqueue admin scripts and styles.
+		 * Enqueue FE scripts and styles.
 		 *
 		 * @global string $post_type
 		 */
@@ -79,6 +83,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 			// CSS
 			wp_enqueue_style( 'pkp-jquery-ui', PKP_URL . '/assets/css/jquery-ui.css' );
 			wp_enqueue_style( 'pkp-main-style', PKP_URL . '/assets/css/payment-confirmation.css' );
+			wp_enqueue_style( 'pkp-main-style', PKP_URL . '/assets/css/admin-payment-confirmation.css' );
 
 			// JS
 			wp_enqueue_script( 'pkp-jquery', PKP_URL . '/assets/js/jquery-3.1.1.min.js' );
@@ -87,6 +92,15 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 			wp_enqueue_script( 'pkp-main-script', PKP_URL . '/assets/js/payment-confirmation.min.js' );
 			wp_enqueue_script( 'pkp-custom-script', PKP_URL . '/assets/js/custom.js' );
 
+		}
+
+		/**
+		 * Enqueue BE scripts and styles.
+		 *
+		 * @global string $post_type
+		 */
+		public function admin_enqueue_scripts() {
+			wp_enqueue_style( 'pkp-admin-order-konfirmasi', PKP_URL . '/assets/css/admin-payment-confirmation.min.css' );
 		}
 
 		/**

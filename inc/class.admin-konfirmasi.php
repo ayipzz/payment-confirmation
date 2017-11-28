@@ -29,25 +29,14 @@ if ( ! class_exists( 'AdminKonfirmasi' ) ) {
 		}
 
 		public function meta_box_payment_confirmation() {
-			
-			global $post;
-
-			$order = wc_get_order( $post->ID );
-
-			/*print_r( $order->get_payment_method() );
-			die();*/
-
-			/*if ( $order->get_payment_method() == 'bacs' ) {*/
-
-				add_meta_box(
-			        'payment_confirmation',
-			        __( 'Konfirmasi Pembayaran', 'pkp' ),
-			        array( $this, 'list_payment_confirmation' ),
-			        'shop_order',
-			        'normal',
-			        'core'
-			    );
-			//}
+			add_meta_box(
+		        'payment_confirmation',
+		        __( 'Konfirmasi Pembayaran', 'pkp' ),
+		        array( $this, 'list_payment_confirmation' ),
+		        'shop_order',
+		        'normal',
+		        'core'
+		    );
 		}
 
 		/**
