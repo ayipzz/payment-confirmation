@@ -20,7 +20,7 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 		 * @version 1.0.0
 		 */
 		public function __construct() {
-			$this->id = 'konfirmasi_pembayaran_setting';
+			$this->id = 'pkps';
 			$this->label = __( 'Konfirmasi Pembayaran', 'pkp' );
 
 			add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_tab' ), 50 );
@@ -64,29 +64,109 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 
 			return array_merge( $settings, array(
 				array(
-					'title'     => __( 'Email Settings', 'pkp' ),
+					'title'     => __( '1. Email', 'pkp' ),
 					'type'      => 'title',
-					'id'        => $this->id . '_reset_options',
+					'id'        => $this->id . '_sec_email',
 				),
 				array(
-					'title'     => __( 'Email Konfirmasi Success (Customer)', 'pkp' ),
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_end',
+				),
+				array(
+					'title'     => __( 'Email Konfirmasi Pelanggan Baru', 'pkp' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_sec_email_customer',
+				),
+				array(
+					'title'     => __( 'Judul', 'pkp' ),
 					'desc'      => '',
-					'default'	=> '',
-					'id'        => $this->id . '_confirm_success_customer',
+					'default'	=> __( 'Konfirmasi Pembayaran', 'pkp' ),
+					'id'        => $this->id . '_confirm_customer_success_title',
+					'type'      => 'text',
+				),
+				array(
+					'title'     => __( 'Content', 'pkp' ),
+					'desc'      => '',
+					'default'	=> __( 'Terima Kasih, Konfirmasi Anda sedang kami proses, harap menunggu.' ),
+					'id'        => $this->id . '_confirm_customer_success_content',
 					'type'      => 'textarea',
 				),
 				array(
-					'title'     => __( 'Email Konfirmasi Success (Admin)', 'pkp' ),
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_end',
+				),
+				array(
+					'title'     => __( 'Email Konfirmasi Berhasil', 'pkp' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_sec_email_confirmation_success',
+				),
+				array(
+					'title'     => __( 'Judul', 'pkp' ),
 					'desc'      => '',
 					'default'	=> '',
-					'id'        => $this->id . '_confirm_success_admin',
+					'id'        => $this->id . '_confirm_email_success_title',
+					'type'      => 'text',
+				),
+				array(
+					'title'     => __( 'Content', 'pkp' ),
+					'desc'      => '',
+					'default'	=> '',
+					'id'        => $this->id . '_confirm_email_success_content',
 					'type'      => 'textarea',
 				),
 				array(
-					'title'     => __( 'Email Payment Success', 'pkp' ),
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_end',
+				),
+				array(
+					'title'     => __( '2. Notifikasi', 'pkp' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_sec_notification',
+				),
+				array(
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_end',
+				),
+				array(
+					'title'     => __( 'Konfirmasi Gagal', 'pkp' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_sec_confirm_failed',
+				),
+				array(
+					'title'     => __( 'Judul', 'pkp' ),
+					'desc'      => '',
+					'default'	=> 'Konfirmasi Gagal',
+					'id'        => $this->id . '_confirm_failed_title',
+					'type'      => 'text',
+				),
+				array(
+					'title'     => __( 'Content', 'pkp' ),
 					'desc'      => '',
 					'default'	=> '',
-					'id'        => $this->id . '_payment_success',
+					'id'        => $this->id . '_confirm_failed_content',
+					'type'      => 'textarea',
+				),
+				array(
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_end',
+				),
+				array(
+					'title'     => __( 'Konfirmasi Berhasil', 'pkp' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_sec_confirm_success',
+				),
+				array(
+					'title'     => __( 'Judul', 'pkp' ),
+					'desc'      => '',
+					'default'	=> '',
+					'id'        => $this->id . '_confirm_success_title',
+					'type'      => 'text',
+				),
+				array(
+					'title'     => __( 'Content', 'pkp' ),
+					'desc'      => '',
+					'default'	=> '',
+					'id'        => $this->id . '_confirm_success_content',
 					'type'      => 'textarea',
 				),
 				array(

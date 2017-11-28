@@ -157,21 +157,17 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 		/**
 		 * Method untuk menghandle apakah ada error, jika ada maka konfirmasi pembayaran batal, jika berhasil maka kirim email
 		 * 
-		 * @param  array $atts  berisi pesan error
+		 * @param  array $error  berisi pesan error
 		 * @return void
 		 */
-		public function error_handle( $atts, $order ) {
+		public function error_handle( $error, $order ) {
 			//global $post;
 
-			if ( count( $atts ) > 0 ) { // jika error batalkan konfirmasi pembayaran ?>
-
-				<h4><?php _e( 'Konfirmasi Pembayaran Gagal', 'pkp' ); ?></h4>
+			if ( count( $error ) > 0 ) { // jika error batalkan konfirmasi pembayaran ?>
+				
+				<h4><?php echo get_option( 'pkps_confirm_failed_title' ) ? get_option( 'pkps_confirm_failed_title' ) : __('Konfirmasi Gagal'); ?></h4>
 				<div class="error_message">
-					<?php
-					foreach ($atts as $key => $value) {
-						echo $value;
-					}
-					?>
+					<?php echo get_option( 'pkps_confirm_failed_content' ) ? get_option( 'pkps_confirm_failed_content' ) : __('Konfirmasi Gagal'); ?>
 				</div>
 
 				<?php
