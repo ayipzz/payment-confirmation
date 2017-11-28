@@ -182,7 +182,7 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 				// Kirim Email notifikasi ke customer jika berhasil memasukan data konfirmasi pembayaran
 				$user_email = $order->get_billing_email();
 				$subject	= 'Konfirmasi Pembayaran';
-				$message    = get_option( 'konfirmasi_pembayaran_setting_text_output' ) ? get_option( 'konfirmasi_pembayaran_setting_text_output' ) : 'Selamat Anda berhasil melakaukan konfirmasi Pembayaran';
+				$message    = get_option( 'konfirmasi_pembayaran_setting_confirm_success_customer' ) ? get_option( 'konfirmasi_pembayaran_setting_confirm_success_customer' ) : 'Selamat Anda berhasil melakaukan konfirmasi Pembayaran';
 
 				if( wp_mail( $user_email, $subject, $message ) ) {
 					echo 'Proses Konfirmasi Berhasil.';
@@ -193,7 +193,7 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 				// Kirim Email notifikasi ke admin jika ada konfirmasi pembayaran
 				$admin_email     = get_option( 'admin_email' );
 				$subject_admin	 = 'Konfirmasi Pembayaran';
-				$message_admin   = 'Ada Konfirmasi Pembayaran Dari : ' . $order->get_formatted_billing_full_name() . ',<br />Dengan No.Order : <a href="'. admin_url( 'post.php?post=' . $order->get_ID() . '&action=edit' ) .'">#' . $order->get_ID() . '</a>';
+				$message_admin   = get_option( 'konfirmasi_pembayaran_setting_confirm_success_admin' ) ? get_option( 'konfirmasi_pembayaran_setting_confirm_success_admin' ) : 'Ada Konfirmasi Pembayaran Dari : ' . $order->get_formatted_billing_full_name() . ',<br />Dengan No.Order : <a href="'. admin_url( 'post.php?post=' . $order->get_ID() . '&action=edit' ) .'">#' . $order->get_ID() . '</a>';
 
 				wp_mail( $admin_email, $subject_admin, $message_admin );
 

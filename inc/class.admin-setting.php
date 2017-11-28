@@ -64,15 +64,29 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 
 			return array_merge( $settings, array(
 				array(
-					'title'     => __( 'Konfirmasi Pembayaran Options', 'pkp' ),
+					'title'     => __( 'Email Settings', 'pkp' ),
 					'type'      => 'title',
 					'id'        => $this->id . '_reset_options',
 				),
 				array(
-					'title'     => __( 'Email Success', 'pkp' ),
+					'title'     => __( 'Email Konfirmasi Success (Customer)', 'pkp' ),
 					'desc'      => '',
 					'default'	=> '',
-					'id'        => $this->id . '_text_output',
+					'id'        => $this->id . '_confirm_success_customer',
+					'type'      => 'textarea',
+				),
+				array(
+					'title'     => __( 'Email Konfirmasi Success (Admin)', 'pkp' ),
+					'desc'      => '',
+					'default'	=> '',
+					'id'        => $this->id . '_confirm_success_admin',
+					'type'      => 'textarea',
+				),
+				array(
+					'title'     => __( 'Email Payment Success', 'pkp' ),
+					'desc'      => '',
+					'default'	=> '',
+					'id'        => $this->id . '_payment_success',
 					'type'      => 'textarea',
 				),
 				array(
