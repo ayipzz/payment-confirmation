@@ -26,6 +26,8 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 			add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_tab' ), 50 );
 			add_action( 'woocommerce_settings_tabs_pkps', array( $this, 'settings_tab' ) );
 			add_action( 'woocommerce_update_options_pkps', array( $this, 'update_settings' ) );
+			add_action( 'admin_footer', array( $this, 'js_config' ) );
+
 		}
 
 		/**
@@ -56,7 +58,6 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 		/**
 		 * Get_settings.
 		 *
-		 * @version 3.1.0
 		 */
 		public function get_settings() {
 			global $current_section;
@@ -64,62 +65,7 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 
 			return array_merge( $settings, array(
 				array(
-					'title'     => __( '1. Email', 'pkp' ),
-					'type'      => 'title',
-					'id'        => $this->id . '_sec_email',
-				),
-				array(
-					'type'      => 'sectionend',
-					'id'        => $this->id . '_end',
-				),
-				array(
-					'title'     => __( 'Email Konfirmasi Pelanggan Baru', 'pkp' ),
-					'type'      => 'title',
-					'id'        => $this->id . '_sec_email_customer',
-				),
-				array(
-					'title'     => __( 'Judul', 'pkp' ),
-					'desc'      => '',
-					'default'	=> __( 'Konfirmasi Pembayaran', 'pkp' ),
-					'id'        => $this->id . '_confirm_customer_success_title',
-					'type'      => 'text',
-				),
-				array(
-					'title'     => __( 'Content', 'pkp' ),
-					'desc'      => '',
-					'default'	=> __( 'Terima Kasih, Konfirmasi Anda sedang kami proses, harap menunggu.' ),
-					'id'        => $this->id . '_confirm_customer_success_content',
-					'type'      => 'textarea',
-				),
-				array(
-					'type'      => 'sectionend',
-					'id'        => $this->id . '_end',
-				),
-				array(
-					'title'     => __( 'Email Konfirmasi Berhasil', 'pkp' ),
-					'type'      => 'title',
-					'id'        => $this->id . '_sec_email_confirmation_success',
-				),
-				array(
-					'title'     => __( 'Judul', 'pkp' ),
-					'desc'      => '',
-					'default'	=> '',
-					'id'        => $this->id . '_confirm_email_success_title',
-					'type'      => 'text',
-				),
-				array(
-					'title'     => __( 'Content', 'pkp' ),
-					'desc'      => '',
-					'default'	=> '',
-					'id'        => $this->id . '_confirm_email_success_content',
-					'type'      => 'textarea',
-				),
-				array(
-					'type'      => 'sectionend',
-					'id'        => $this->id . '_end',
-				),
-				array(
-					'title'     => __( '2. Notifikasi', 'pkp' ),
+					'title'     => __( 'Notifikasi', 'pkp' ),
 					'type'      => 'title',
 					'id'        => $this->id . '_sec_notification',
 				),
@@ -174,6 +120,18 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 					'id'        => $this->id . '_end',
 				),
 			) );
+		}
+
+		/**
+		 * Add Editor
+		 * 
+		 * @return [type] [description]
+		 */
+		public function js_config() {
+			echo '
+			<style type="text/css">.trumbowyg-editor, .trumbowyg-textarea {background: #fff;}.trumbowyg-box, .trumbowyg-editor {min-height: 200px;}</style>
+			<script type="text/javascript">jQuery(\'textarea\').trumbowyg({autogrow: true});</script>
+			';
 		}
 
 	}
