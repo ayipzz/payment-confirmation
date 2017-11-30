@@ -54,7 +54,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 
 			new AdminKonfirmasi();
 			new FormKonfirmasi();
-			new AdminSettingKonfirmasi();
+			new PaymentConfirmationAdminPage();
 			
 		}
 
@@ -78,7 +78,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 			include_once PKP_PATH . 'inc/class.form-konfirmasi.php';
 			include_once PKP_PATH . 'inc/class.custom-query.php';
 			include_once PKP_PATH . 'inc/class.admin-konfirmasi.php';
-			include_once PKP_PATH . 'inc/class.admin-setting.php';
+			include_once PKP_PATH . 'inc/class.admin-page.php';
 		}
 
 		/**
@@ -144,11 +144,6 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 		 */
 		public function admin_enqueue_scripts() {
 			wp_enqueue_style( 'pkp-admin-order-konfirmasi', PKP_URL . '/assets/css/admin-payment-confirmation.min.css' );
-			
-			if ( get_current_screen()->id == 'woocommerce_page_wc-settings' && ( isset( $_GET['tab'] ) && $_GET['tab'] == 'pkps' ) ) {
-				wp_enqueue_style( 'pkp-admin-trumbowyg', PKP_URL . '/assets/css/trumbowyg.min.css' );
-				wp_enqueue_script( 'pkp-tiny-script', PKP_URL . '/assets/js/trumbowyg.min.js' );
-			}
 		}
 
 		/**
@@ -157,7 +152,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 		 * @return html
 		 */
 		public function plugin_add_settings_link( $links ) {
-			$settings_link = '<a href="admin.php?page=wc-settings&tab=pkps">' . __( 'Settings' ) . '</a>';
+			$settings_link = '<a href="admin.php?page=payment_confirmation&tab=notification">' . __( 'Settings' ) . '</a>';
 			$email_settings_link = '<a href="admin.php?page=wc-settings&tab=email">' . __( 'Email Settings' ) . '</a>';
 		    array_push( $links, $settings_link );
 		    array_push( $links, $email_settings_link );

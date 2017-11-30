@@ -60,10 +60,18 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 		 *
 		 */
 		public function get_settings() {
+			
+			//wp_editor('','notif_success');
+
 			global $current_section;
 			$settings = apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() );
 
-			return array_merge( $settings, array(
+			//print_r( $settings ); 
+
+			$a[] = '<input type="text" id="'.$this->id.'_notif_success_title" name="'.$this->id.'_notif_success_title">';
+
+
+			/*return array_merge( $settings, array(
 				array(
 					'title'     => __( 'Notifikasi', 'pkp' ),
 					'type'      => 'title',
@@ -119,7 +127,7 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 					'type'      => 'sectionend',
 					'id'        => $this->id . '_end',
 				),
-			) );
+			) );*/
 		}
 
 		/**
@@ -129,10 +137,33 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 		 */
 		public function js_config() {
 			if ( get_current_screen()->id == 'woocommerce_page_wc-settings' && ( isset( $_GET['tab'] ) && $_GET['tab'] == 'pkps' ) ) {
-				echo '
+				wp_enqueue_script('tiny_mce');
+				echo '<script type="text/javascript">
+        tinyMCE.init({
+            mode : "exact",
+            elements : "pkps_confirm_failed_content,elem2", //putting extra tetarea id seperated by comma to show WYSIWYG 
+            //theme : "simple",
+            theme : "advanced",
+               height:"250",
+                //width:"600",
+ 
+            // Theme options
+            theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull",
+            theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,| formatselect,fontselect,fontsizeselect",
+            theme_advanced_buttons3 : "", 
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_statusbar_location : "bottom",
+            theme_advanced_resizing : true,
+ 
+        });
+    </script>';
+
+				//echo '<script type="text/javascript">tinyMCE.init({ mode : "exact",selector:\'textarea\', menubar : false });</script>';
+				/*echo '
 				<style type="text/css">.trumbowyg-editor, .trumbowyg-textarea {background: #fff;}.trumbowyg-box, .trumbowyg-editor {min-height: 200px;}</style>
 				<script type="text/javascript">jQuery(\'textarea\').trumbowyg({autogrow: true});</script>
-				';
+				';*/
 			}
 		}
 

@@ -1,3 +1,20 @@
 .payment-confirmation h2{border-bottom:1px solid #e5e5e5}.payment-confirmation--box{width:calc(100% - 48px);padding:12px;margin:12px;background:#f9f9f9}.payment-confirmation--box:after{content:'';display:table;clear:both}.payment-confirmation--box .box-col{width:48%}.payment-confirmation--box .box-col--left{float:left}.payment-confirmation--box .box-col--right{float:right;text-align:right}.payment-confirmation--box .box-col--right img{border:1px solid #e5e5e5;padding:5px;max-width:100%;max-height:100%}@media (max-width: 782px){.payment-confirmation--box .box-col{width:100%;float:none;text-align:left}.payment-confirmation--box .box-col--left{margin-bottom:12px}}.payment-confirmation--box table tr:nth-child(odd){font-weight:500}th#confirm_payment{width: 9%;}
-
+.section_setting {
+    background: #fff;
+    padding: 15px;
+    margin: 20px 0 20px;
+}
+.section_setting table.setting_form {
+    width: 100%;
+}
+.section_setting h3.title {
+    border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+    margin: -15px -15px 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.section_setting table.setting_form td {
+    padding: 0 0 20px;
+}
 /*# sourceMappingURL=payment-confirmation.min.css.map */

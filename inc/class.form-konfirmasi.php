@@ -168,8 +168,8 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 			// if found error, stop the process
 			if ( count( $error ) > 0 ) { 
 				$option = new HelpersKonfirmasi();
-				echo $option->get_konfirmasi_option( 'pkps_confirm_failed_title' ) . '<br />';
-				echo $option->get_konfirmasi_option( 'pkps_confirm_failed_content' );
+				echo $option->get_konfirmasi_option( 'notif_failed_title' ) . '<br />';
+				echo $option->get_konfirmasi_option( 'notif_failed_content' );
 			}
 
 		}
@@ -192,8 +192,8 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 			$option->send_single_email( 'admin_confirmation_submited', $admin_email, $order_id );
 
 			// print success message
-			echo $option->get_konfirmasi_option( 'pkps_confirm_success_title' ) . '<br />';
-			echo $option->get_konfirmasi_option( 'pkps_confirm_success_content' );
+			echo $option->get_konfirmasi_option( 'notif_success_title' ) . '<br />';
+			echo $option->get_konfirmasi_option( 'notif_success_content' );
 		}
 
 	}

@@ -27,7 +27,6 @@ jQuery(function($){
 		} else if ( $("#destination-bank").val() == '' ) {
 
 			alert("Error : Pilih Bank Tujuan");
-			$("#destination-bank").focus();
 			return false;
 
 		} else if ( $("#bank").val() == '' ) {
