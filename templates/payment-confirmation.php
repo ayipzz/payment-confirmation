@@ -17,4 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php echo $email_body; ?>
 
+<?php if ( $order != false ) { ?>
+
+	<?php do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email ); ?>
+
+<?php } ?>
+
 <?php do_action( 'woocommerce_email_footer' ); ?>

@@ -51,8 +51,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="description"><?php _e( 'Keterangan', 'pkp' ); ?> <span class="required">*</span></label>
-            <textarea name="description" id="description" class="form-control" placeholder="Keterangan" required></textarea>
+            <label for="description"><?php _e( 'Keterangan', 'pkp' ); ?></label>
+            <textarea name="description" id="description" class="form-control" placeholder="Keterangan"></textarea>
         </div>
         <div class="form-button">
             <button type="button" class="btn btn-cancel"><?php _e( 'BATAL', 'pkp' ); ?></button>

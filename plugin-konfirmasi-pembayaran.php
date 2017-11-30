@@ -46,6 +46,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 			}
 
 			add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ) , array( $this, 'plugin_add_settings_link' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
@@ -75,6 +76,7 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 		private function includes() {
 			include_once PKP_PATH . 'inc/class.helpers.php';
 			include_once PKP_PATH . 'inc/class.form-konfirmasi.php';
+			include_once PKP_PATH . 'inc/class.custom-query.php';
 			include_once PKP_PATH . 'inc/class.admin-konfirmasi.php';
 			include_once PKP_PATH . 'inc/class.admin-setting.php';
 		}
@@ -147,6 +149,19 @@ if ( ! class_exists( 'PluginKonfirmasiPembayaran' ) ) {
 				wp_enqueue_style( 'pkp-admin-trumbowyg', PKP_URL . '/assets/css/trumbowyg.min.css' );
 				wp_enqueue_script( 'pkp-tiny-script', PKP_URL . '/assets/js/trumbowyg.min.js' );
 			}
+		}
+
+		/**
+		 * Add setting quick link to the plugins list
+		 * 
+		 * @return html
+		 */
+		public function plugin_add_settings_link( $links ) {
+			$settings_link = '<a href="admin.php?page=wc-settings&tab=pkps">' . __( 'Settings' ) . '</a>';
+			$email_settings_link = '<a href="admin.php?page=wc-settings&tab=email">' . __( 'Email Settings' ) . '</a>';
+		    array_push( $links, $settings_link );
+		    array_push( $links, $email_settings_link );
+		  	return $links;
 		}
 
 	}

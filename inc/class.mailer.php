@@ -45,10 +45,18 @@ if ( ! class_exists( 'PaymentConfirmationEmail' ) ) {
 		 * 
 		 * @return boolean
 		 */
-		public function trigger( $email ) {
+		public function trigger( $email, $order_id, $order = false ) {
 			
-			$this->recipient    = $email;
-			//$this->get_content  = '';
+			if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
+				$order = wc_get_order( $order_id );
+			}
+
+			if ( is_a( $order, 'WC_Order' ) ) {
+				$this->object = $order;
+			} else {
+				$this->object = false;
+			}
+			$this->recipient  = $email;
 			
 			if ( ! $this->is_enabled() || ! $this->get_recipient() ) {
 				return;
@@ -60,6 +68,7 @@ if ( ! class_exists( 'PaymentConfirmationEmail' ) ) {
 		public function get_content_html() {
 			ob_start();
 			$email_heading = $this->get_heading();
+			$order         = $this->object;
 			$email_body    = $this->get_email_setting('body_content');
 
 			include apply_filters( 'pkp_email_template_path', PKP_PATH . 'templates/payment-confirmation.php' );

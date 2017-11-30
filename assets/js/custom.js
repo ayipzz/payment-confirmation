@@ -48,12 +48,6 @@ jQuery(function($){
 			$("#payment-file").focus();
 			return false;
 
-		} else if ( $("#description").val() == '' ) {
-
-			alert("Error : Masukan Keterangan");
-			$("#description").focus();
-			return false;
-
 		} else {
 			return true;
 		}

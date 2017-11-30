@@ -128,10 +128,12 @@ if ( ! class_exists( 'AdminSettingKonfirmasi' ) ) :
 		 * @return [type] [description]
 		 */
 		public function js_config() {
-			echo '
-			<style type="text/css">.trumbowyg-editor, .trumbowyg-textarea {background: #fff;}.trumbowyg-box, .trumbowyg-editor {min-height: 200px;}</style>
-			<script type="text/javascript">jQuery(\'textarea\').trumbowyg({autogrow: true});</script>
-			';
+			if ( get_current_screen()->id == 'woocommerce_page_wc-settings' && ( isset( $_GET['tab'] ) && $_GET['tab'] == 'pkps' ) ) {
+				echo '
+				<style type="text/css">.trumbowyg-editor, .trumbowyg-textarea {background: #fff;}.trumbowyg-box, .trumbowyg-editor {min-height: 200px;}</style>
+				<script type="text/javascript">jQuery(\'textarea\').trumbowyg({autogrow: true});</script>
+				';
+			}
 		}
 
 	}

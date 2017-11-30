@@ -46,13 +46,13 @@ if ( ! class_exists( 'HelpersKonfirmasi' ) ) {
 		 * @param string $email_type
 		 * @param string $email_address
 		 */
-		public function send_single_email( $email_type, $email_address ) {
+		public function send_single_email( $email_type, $email_address, $order_id ) {
 
 			global $woocommerce;
 			$mailer = WC()->mailer();
 			$mails = $mailer->get_emails();
 			if( isset( $mails[$email_type] ) ) { 
-				return $mails[$email_type]->trigger( $email_address );
+				return $mails[$email_type]->trigger( $email_address, $order_id );
 			}
 			return false;
 		}

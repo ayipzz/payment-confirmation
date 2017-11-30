@@ -185,11 +185,11 @@ if ( ! class_exists( 'FormKonfirmasi' ) ) {
 
 			// send email notification to customer
 			$user_email = $order->get_billing_email();
-			$option->send_single_email( 'confirmation_submited', $user_email );
+			$option->send_single_email( 'confirmation_submited', $user_email, $order_id );
 
 			// send email notification to admin
 			$admin_email = get_option( 'admin_email' );
-			$option->send_single_email( 'admin_confirmation_submited', $admin_email );
+			$option->send_single_email( 'admin_confirmation_submited', $admin_email, $order_id );
 
 			// print success message
 			echo $option->get_konfirmasi_option( 'pkps_confirm_success_title' ) . '<br />';
